@@ -1,6 +1,7 @@
 import csv
 import json
 import math
+import os
 import time
 from collections import defaultdict
 
@@ -145,7 +146,7 @@ class Base:
         for name, team in self.teams.items():
             team.update_uncertainty()
 
-    def auto_iterate(self, time_limit=10, precision=10E-3):
+    def auto_iterate(self, time_limit=10, precision=10E-3, monitor=False):
         """Summary
         
         Args:
@@ -160,6 +161,8 @@ class Base:
         a = self.get_ordered_ratings(compact=True)
         i = 10
         while True:
+            if monitor:
+                print("Elapsed time: {}".format(time.time()-start))
             self.iterate(10)
             i += 10
             b = self.get_ordered_ratings(compact=True)
@@ -279,7 +282,7 @@ class Base:
 
 if __name__ == "__main__":
     whr = Base(config={"w2": 14})
-    with open('processed plays.csv', 'r') as infile:
+    with open(os.path.join(os.pardir, 'data', 'power.csv'), 'r') as infile:
         plays = [x for x in csv.reader(infile)]
 
     whr.load_plays(plays)
