@@ -53,5 +53,5 @@ if __name__ == "__main__":
                     except KeyError:
                         results[' '.join(team[:-1])] = {'_'.join([x, file.__str__().split('.')[0]]): t[1]}
 
-        with open(os.path.join('data', 'ELO ratings 2.json'), 'w+') as outfile:
+        with open(os.path.join('data', 'ELO ratings.json'), 'w+') as outfile:
             json.dump(results, outfile, indent=4, sort_keys=True)
